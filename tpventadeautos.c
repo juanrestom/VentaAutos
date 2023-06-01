@@ -31,7 +31,7 @@ void agregarVenta(struct VentaAuto ventas[], int *contador) {
     
     printf("Ingrese el precio de venta: ");
     scanf("%f", &nuevaVenta.precio);
-    getchar();  // Limpiar el búfer de entrada
+    getchar();  
     
     ventas[*contador] = nuevaVenta;
     (*contador)++;
@@ -70,7 +70,7 @@ void modificarVenta(struct VentaAuto ventas[], int contador, int indice) {
         
         printf("Ingrese el precio de venta: ");
         scanf("%f", &ventaModificada.precio);
-        getchar();  // Limpiar el búfer de entrada
+        getchar();
         
         ventas[indice] = ventaModificada;
         
@@ -80,7 +80,7 @@ void modificarVenta(struct VentaAuto ventas[], int contador, int indice) {
     }
 };
 void mostrarVentas(struct VentaAuto ventas[], int contador) {
-    printf("=== Listado de Ventas ===\n");
+    printf(" Listado de Ventas\n");
     if (contador > 0) {
         for (int i = 0; i < contador; i++) {
             printf("Venta %d:\n", i + 1);
@@ -105,7 +105,7 @@ int main() {
     int opcion;
 
     do {
-        printf("\n=== Sistema ABM - Ventas de Autos ===\n");
+        printf("\nSistema ABM - Ventas de Autos\n");
         printf("1. Agregar venta\n");
         printf("2. Eliminar venta\n");
         printf("3. Modificar venta\n");
