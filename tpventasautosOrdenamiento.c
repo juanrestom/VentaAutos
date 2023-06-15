@@ -14,7 +14,7 @@ struct VentaAuto {
 void agregarVenta(struct VentaAuto ventas[], int *contador) {
     struct VentaAuto nuevaVenta;
     
-    printf("Ingrese el lugar: ");
+   printf("Ingrese el lugar: ");
     fgets(nuevaVenta.lugar, sizeof(nuevaVenta.lugar), stdin);
     
     printf("Ingrese el vendedor: ");
@@ -100,60 +100,54 @@ void mostrarVentas(struct VentaAuto ventas[], int contador) {
     }
 }
 
-void merge(struct VentaAuto ventas[], int low, int mid, int high) {
-    int leftLength = mid - low + 1;
-    int rightLength = high - mid;
-    
-    struct VentaAuto* leftArray = (struct VentaAuto*)malloc(leftLength * sizeof(struct VentaAuto));
-    struct VentaAuto* rightArray = (struct VentaAuto*)malloc(rightLength * sizeof(struct VentaAuto));
-    
-    for (int i = 0; i < leftLength; i++) {
-        leftArray[i] = ventas[low + i];
-    }
-    
-    for (int j = 0; j < rightLength; j++) {
-        rightArray[j] = ventas[mid + 1 + j];
-    }
-    
-    int i = 0;
-    int j = 0;
-    int k = low;
-    
-    while (i < leftLength && j < rightLength) {
-        if (strcmp(leftArray[i].lugar, rightArray[j].lugar) <= 0) {
-            ventas[k] = leftArray[i];
+void merge(struct VentaAuto ventas[], int izquierda, int medio, int derecha) {
+    int i, j, k;
+    int n1 = medio - izquierda + 1;
+    int n2 = derecha - medio;
+
+    struct VentaAuto izquierdaArray[n1], derechaArray[n2];
+
+    for (i = 0; i < n1; i++)
+        izquierdaArray[i] = ventas[izquierda + i];
+    for (j = 0; j < n2; j++)
+        derechaArray[j] = ventas[medio + 1 + j];
+
+    i = 0;
+    j = 0;
+    k = izquierda;
+
+    while (i < n1 && j < n2) {
+        if (izquierdaArray[i].precio <= derechaArray[j].precio) {
+            ventas[k] = izquierdaArray[i];
             i++;
         } else {
-            ventas[k] = rightArray[j];
+            ventas[k] = derechaArray[j];
             j++;
         }
         k++;
     }
-    
-    while (i < leftLength) {
-        ventas[k] = leftArray[i];
+
+    while (i < n1) {
+        ventas[k] = izquierdaArray[i];
         i++;
         k++;
     }
-    
-    while (j < rightLength) {
-        ventas[k] = rightArray[j];
+
+    while (j < n2) {
+        ventas[k] = derechaArray[j];
         j++;
         k++;
     }
-    
-    free(leftArray);
-    free(rightArray);
 }
 
-void mergeSort(struct VentaAuto ventas[], int low, int high) {
-    if (low < high) {
-        int mid = low + (high - low) / 2;
-        
-        mergeSort(ventas, low, mid);
-        mergeSort(ventas, mid + 1, high);
-        
-        merge(ventas, low, mid, high);
+void mergeSort(struct VentaAuto ventas[], int izquierda, int derecha) {
+    if (izquierda < derecha) {
+        int medio = izquierda + (derecha - izquierda) / 2;
+
+        mergeSort(ventas, izquierda, medio);
+        mergeSort(ventas, medio + 1, derecha);
+
+        merge(ventas, izquierda, medio, derecha);
     }
 }
 void quickSort(struct VentaAuto ventas[], int izquierda, int derecha) {
